@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="Transformation" 
+        android:gravity="center"/>
+
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView  
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:textSize="20dp"
+        		android:text="Center" 
+        		android:layout_gravity="center"/>
+
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" 
+                android:gravity="right">
+            	<NumberPicker
+                	android:id="@+id/numberPickerCenter"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content" />    
+            </LinearLayout>
+            
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView  
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:textSize="20dp"
+        		android:text="Through" 
+        		android:layout_gravity="center"/>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" 
+                android:gravity="right">
+            	<NumberPicker
+                	android:id="@+id/numberPickerThrough"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content" />    
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tfsColorButton"
+        android:text="Color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"> 
+    </Button>
+</LinearLayout>

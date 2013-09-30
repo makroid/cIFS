@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">cIFS</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_ifs">IFSActivity</string>
+    <string name="title_activity_my_ifs">MyIFSActivity</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_tfs">Add</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto" >
+ 
+    <armin.cifs.dialogs.SeekBarDialogPreference
+        android:key="pref_numberOfSamples"
+        android:defaultValue="150"
+        android:dialogMessage="Select number of samples:"
+        android:max="1000"
+        android:title="Number of iterations"
+        custom:min="0" />
+    
+    <armin.cifs.dialogs.SeekBarDialogPreference
+        android:key="pref_numberOfBurnins"
+        android:defaultValue="100"
+        android:dialogMessage="Select number of burnin samples:"
+        android:max="500"
+        android:title="Number of burnin samples"
+        android:summary="Burnin samples are omitted"        
+        custom:min="0" />
+    
+    <armin.cifs.dialogs.SeekBarDialogPreference
+        android:key="pref_nodeRadius"
+        android:defaultValue="18"
+        android:dialogMessage="Set radius of nodes:"
+        android:max="25"
+        android:title="Radius of nodes"        
+        custom:min="0" />
+    
+    <armin.cifs.dialogs.SeekBarDialogPreference
+        android:key="pref_sampleRadius"
+        android:defaultValue="3"
+        android:dialogMessage="Set radius of sample points:"
+        android:max="20"
+        android:title="Radius of samples"
+        custom:min="0" />
+    
+    <armin.cifs.dialogs.ColorChooserPreference
+        android:key="pref_sampleColor"
+        android:defaultValue="-256"
+        android:dialogMessage="test"
+        android:title="Color of samples"
+        />
+ 
+</PreferenceScreen>

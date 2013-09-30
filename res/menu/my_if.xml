@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+     <item android:id="@+id/menu_new_form"
+          android:icon="@android:drawable/ic_input_add"
+          android:title="Add"
+          android:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/addPoint"
+                  android:title="Point"
+                  android:onClick="onClickAddPoint"
+                   />
+            <item android:id="@+id/addP2Transformation"                  
+                  android:title="P2Transformation"
+                  android:onClick="onClickAddP2Transformation"
+                   />
+            <item android:id="@+id/addInvTransformation"                  
+                  android:title="InvTransformation"
+                  android:onClick="onClickAddInvTransformation"
+                   />
+        </menu>
+    </item>
+        
+     <item android:id="@+id/menu_settings"
+          android:icon="@android:drawable/ic_menu_preferences"
+          android:title="Settings"
+          android:onClick="onClickSettings"
+          android:showAsAction="ifRoom|withText"/>
+</menu>
