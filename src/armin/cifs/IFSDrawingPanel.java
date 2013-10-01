@@ -34,6 +34,7 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	private float _selectPointRadius;
 	private float _sampleRadius;
 	private int _sampleColor;
+	private boolean _drawTrace;
 
 	public IFSDrawingPanel(Context acontext, ComplexPointSet apointSet, TransformationSet atfsSet, IFSsampler asampler) {
 		super(acontext);
@@ -54,8 +55,10 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		_sampler.setIterations(pref.getInt("pref_numberOfSamples", 150));
 		_sampler.setBurnin(pref.getInt("pref_numberOfBurnins", 100));
 		_sampleColor           = pref.getInt("pref_sampleColor", -256);
+		_drawTrace             = pref.getBoolean("pref_drawTrace", false);
 	}
 	
+
 	protected void onSizeChanged (int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		System.out.println("w=" + w + "h=" + w);
@@ -119,10 +122,9 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 			canvas.drawCircle(_pointSet.getSelectedPoint().z.getReal(), _pointSet.getSelectedPoint().z.getImag(), _selectPointRadius, _paint);
 		}
 		
-		_paint.setStyle(Paint.Style.FILL);
-		_paint.setColor(_sampleColor);
-		for (Complex c : _sampler.getSample()) {
-			canvas.drawCircle(c.getReal(), c.getImag(), _sampleRadius, _paint);
+		drawSample(canvas);
+		if (_drawTrace) {
+			drawTrace(canvas);
 		}
 	}
 	
@@ -140,6 +142,24 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		_paint.setStrokeWidth(3);
 		for (TransformationSet.TfsWithWeight tfs : _tfsSet.get_tfsSet().values()) {			
 			tfs.tfs.paint(canvas, _paint);		
+		}
+	}
+	
+	private void drawSample(Canvas canvas) {
+		_paint.setStyle(Paint.Style.FILL);
+		_paint.setColor(_sampleColor);
+		for (Complex c : _sampler.getSample()) {
+			canvas.drawCircle(c.getReal(), c.getImag(), _sampleRadius, _paint);
+		}
+	}
+	
+	private void drawTrace(Canvas canvas) {
+		_paint.setStyle(Paint.Style.STROKE);
+		_paint.setStrokeWidth(1);
+		_paint.setColor(_sampleColor);
+		ArrayList<Complex> sample = _sampler.getSample();
+		for (int i=1; i<sample.size(); i++) {
+			canvas.drawLine(sample.get(i-1).getReal(), sample.get(i-1).getImag(), sample.get(i).getReal(), sample.get(i).getImag(), _paint);
 		}
 	}
 	
@@ -257,6 +277,10 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	
 	public void set_sampleColor(int col) {
 		_sampleColor = col;
+	}
+	
+	public void set_drawTrace(boolean _drawTrace) {
+		this._drawTrace = _drawTrace;
 	}
 } 
 

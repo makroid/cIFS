@@ -116,7 +116,10 @@ public class MyIFSActivity extends Activity implements OnSharedPreferenceChangeL
 			int color = pref.getInt("pref_sampleColor", -256);
 			_panel.set_sampleColor(color);
 			_panel.invalidate();
-		}
-				
+		} else if (key.equals("pref_drawTrace")) {
+			boolean drawTrace = pref.getBoolean("pref_drawTrace", false);
+			_panel.set_drawTrace(drawTrace);
+			_panel.invalidate();
+		}		
 	}
 }

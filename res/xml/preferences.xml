@@ -41,5 +41,12 @@
         android:dialogMessage="test"
         android:title="Color of samples"
         />
+    
+     
+	<CheckBoxPreference
+	    android:key="pref_drawTrace"
+    	android:title="Draw trace"
+    	android:summary="Draws trace as a line"
+    	android:defaultValue="false" />
  
 </PreferenceScreen>
