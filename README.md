@@ -2,8 +2,13 @@ cIFS
 ==========================
 A very simple android app which allows to visualize Möbius-tranformations by iterative function systems.
 
-General idea
-------------
+Examples
+--------
+
+![Examples](http://i.imgur.com/hDpNWcy.jpg?1)
+
+General concept
+---------------
 A starting point and a set of transformations, which take as input a single point and output another point, are given.
 Then, the following simple iteration is applied X-times:
 	
