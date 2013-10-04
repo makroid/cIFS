@@ -8,10 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Toast;
 import armin.cifs.complex.*;
 
@@ -24,7 +27,8 @@ import armin.cifs.complex.*;
 
 public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callback {
 	
-//	private PanelThread _thread; // THREAD	
+//	private PanelThread _thread; // THREAD
+	private MyIFSActivity _parent;
 	private Paint _paint;
 	private ComplexPointSet _pointSet;
 	private TransformationSet _tfsSet;
@@ -36,15 +40,24 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	private int _sampleColor;
 	private boolean _drawTrace;
 
-	public IFSDrawingPanel(Context acontext, ComplexPointSet apointSet, TransformationSet atfsSet, IFSsampler asampler) {
-		super(acontext);
-		getHolder().addCallback(this);		
+	private boolean _moveMode;
+	private boolean _isStarted;
+
+	public IFSDrawingPanel(MyIFSActivity aparent, 
+						   ComplexPointSet apointSet, 
+						   TransformationSet atfsSet, 
+						   IFSsampler asampler) {
+		super(aparent);
+		getHolder().addCallback(this);
+		_parent   = aparent;
 		_pointSet = apointSet;
 		_tfsSet   = atfsSet;
 		_sampler  = asampler;
 		_paint    = new Paint();
+		_moveMode = false;
+		_isStarted = false;
 		
-		setDefaultPaintValues(acontext);
+		setDefaultPaintValues(aparent);
 	}
 	
 	private void setDefaultPaintValues(Context acontext) {	
@@ -57,12 +70,15 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		_sampleColor           = pref.getInt("pref_sampleColor", -256);
 		_drawTrace             = pref.getBoolean("pref_drawTrace", false);
 	}
-	
 
 	protected void onSizeChanged (int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		System.out.println("w=" + w + "h=" + w);
-		_pointSet.updateStartPoint(new Complex(w/2, 3*h/4));
+		System.out.println("w=" + w + "h=" + h);
+		// set start position only at the very beginning!
+		if ( ! _isStarted) {
+			_pointSet.updateStartPoint(new Complex(w/2, 3*h/4));
+			_isStarted = true;
+		}
 	}
 	
 //	class PanelThread extends Thread { // THREAD
@@ -163,15 +179,28 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		}
 	}
 	
+	// handler for long press => active move-mode
+	final Handler handler = new Handler(); 
+	Runnable mLongPressed = new Runnable() { 
+	    public void run() { 	        
+	        _parent.get_pmPanel().setVisibility(View.VISIBLE);
+	        _moveMode = true;
+			invalidate();
+	    }   
+	};
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		// block touch events in move mode
+		if (_moveMode) { return false; }
+		
 		int eventaction = event.getAction();
 		float touchX = event.getX();
 		float touchY = event.getY();
-		
+				
 	    switch (eventaction) {
 	        case MotionEvent.ACTION_DOWN:
-	        	ComplexPoint touchedPoint = findPointTouched(touchX, touchY);
+	        	ComplexPoint touchedPoint = findPointTouched(touchX, touchY);	        	
 	            if (_pointSet.hasSelectedPoint()) {	
 	            	_pointSet.getSelectedPoint().z.update(new Complex(touchX, touchY));
 	            	_pointSet.unselectPoint();
@@ -179,6 +208,7 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	            } else {
 	            	if (touchedPoint != null) {
 	            		_pointSet.setSelectedPoint(touchedPoint);
+	            		if ( ! _moveMode) {handler.postDelayed(mLongPressed, 1000); }
 	            	}
 	            }
 	            break;
@@ -188,15 +218,18 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	        		_pointSet.getSelectedPoint().z.update(new Complex(touchX, touchY));
 	        		calculateSample();
 	        	}
+	        	handler.removeCallbacks(mLongPressed);
 	            break;
 
 	        case MotionEvent.ACTION_UP: 
-	        	if (_pointSet.hasSelectedPoint()) {
+	        	if (_pointSet.hasSelectedPoint() && !_moveMode) {
 	        		_pointSet.unselectPoint();
 	        	}
+	        	handler.removeCallbacks(mLongPressed);
 	            break;
 	    }
 		invalidate();
+				
 		return true;
 	}
 
@@ -246,6 +279,23 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		return null;
 	}
 	
+	public boolean moveSelectedPoint(int direction) {
+		if (_pointSet.hasSelectedPoint()) {			
+			Complex z = _pointSet.getSelectedPoint().z;
+			switch (direction) {
+				case 0: z.update(z.add(new Complex(-1, 0))); break;
+				case 1: z.update(z.add(new Complex(1, 0))); break;
+				case 2: z.update(z.add(new Complex(0, 1))); break;
+				case 3: z.update(z.add(new Complex(0, -1))); break;
+				default: z.update(z.add(new Complex(0, 0))); break;
+			}
+			calculateSample();
+			invalidate();
+			return true;
+		}
+		return false;
+	}
+	
 	public ComplexPointSet get_pointSet() {
 		return _pointSet;
 	}
@@ -281,6 +331,11 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	
 	public void set_drawTrace(boolean _drawTrace) {
 		this._drawTrace = _drawTrace;
+	}
+	
+	public void unsetMoveMode() {
+		_moveMode = false;
+		_pointSet.unselectPoint();
 	}
 } 
 

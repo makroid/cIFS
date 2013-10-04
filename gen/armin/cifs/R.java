@@ -44,10 +44,10 @@ containing a value of this type.
         public static final int scale=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f09001f;
-        public static final int addInvTransformation=0x7f090023;
-        public static final int addP2Transformation=0x7f090022;
-        public static final int addPoint=0x7f090021;
+        public static final int action_settings=0x7f090024;
+        public static final int addInvTransformation=0x7f090028;
+        public static final int addP2Transformation=0x7f090027;
+        public static final int addPoint=0x7f090026;
         public static final int ambilwarna_cursor=0x7f09000e;
         public static final int ambilwarna_dialogView=0x7f09000a;
         public static final int ambilwarna_pref_widget_kotak=0x7f090013;
@@ -68,8 +68,13 @@ containing a value of this type.
         public static final int linearLayout_dummy1=0x7f090000;
         public static final int linearLayout_dummy2=0x7f090003;
         public static final int linearLayout_dummy3=0x7f090009;
-        public static final int menu_new_form=0x7f090020;
-        public static final int menu_settings=0x7f090024;
+        public static final int menu_new_form=0x7f090025;
+        public static final int menu_settings=0x7f090029;
+        public static final int moveDownButton=0x7f09001f;
+        public static final int moveLeftButton=0x7f09001c;
+        public static final int moveOkButton=0x7f090020;
+        public static final int moveRightButton=0x7f09001d;
+        public static final int moveUpButton=0x7f09001e;
         public static final int numberPickerA=0x7f090017;
         public static final int numberPickerB=0x7f09001a;
         public static final int numberPickerC=0x7f090019;
@@ -77,9 +82,9 @@ containing a value of this type.
         public static final int numberPickerD=0x7f09001b;
         public static final int numberPickerThrough=0x7f090015;
         public static final int second_row=0x7f090007;
-        public static final int seek_bar=0x7f09001e;
-        public static final int text_dialog_message=0x7f09001c;
-        public static final int text_progress=0x7f09001d;
+        public static final int seek_bar=0x7f090023;
+        public static final int text_dialog_message=0x7f090021;
+        public static final int text_progress=0x7f090022;
         public static final int tfsColorButton=0x7f090016;
     }
     public static final class layout {
@@ -89,8 +94,9 @@ containing a value of this type.
         public static final int ambilwarna_pref_widget=0x7f030003;
         public static final int dialog_invtfs=0x7f030004;
         public static final int dialog_transformation=0x7f030005;
-        public static final int preference_seekbar_dialog=0x7f030006;
-        public static final int settings_activity=0x7f030007;
+        public static final int pointmove_panel=0x7f030006;
+        public static final int preference_seekbar_dialog=0x7f030007;
+        public static final int settings_activity=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f080000;

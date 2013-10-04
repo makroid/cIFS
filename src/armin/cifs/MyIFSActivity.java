@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import armin.cifs.complex.Complex;
 import armin.cifs.complex.ComplexPointSet;
@@ -20,6 +22,7 @@ import armin.cifs.dialogs.TransformationDialog;
 public class MyIFSActivity extends Activity implements OnSharedPreferenceChangeListener {
 
 	private IFSDrawingPanel _panel;
+	private PointMovePanel _pmPanel;
 	private ComplexPointSet _pointSet;
 	private TransformationSet _tfsSet;
 	private IFSsampler _sampler;	
@@ -29,9 +32,19 @@ public class MyIFSActivity extends Activity implements OnSharedPreferenceChangeL
 		super.onCreate(savedInstanceState);
 		_pointSet = new ComplexPointSet();
 		_tfsSet   = new TransformationSet();
-		_sampler  = new IFSsampler(_tfsSet);
+		_sampler  = new IFSsampler(_tfsSet);		
 		_panel    = new IFSDrawingPanel(MyIFSActivity.this, _pointSet, _tfsSet, _sampler);
-		setContentView(_panel);
+		_pmPanel  = new PointMovePanel(MyIFSActivity.this);
+		
+		_pmPanel.setVisibility(View.GONE);
+				
+		LinearLayout layout = new LinearLayout(MyIFSActivity.this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
+		layout.addView(_panel, p);
+		layout.addView(_pmPanel);
+
+		setContentView(layout);
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		pref.registerOnSharedPreferenceChangeListener(this);				
@@ -89,6 +102,10 @@ public class MyIFSActivity extends Activity implements OnSharedPreferenceChangeL
 	
 	public IFSDrawingPanel get_panel() {
 		return _panel;
+	}
+	
+	public PointMovePanel get_pmPanel() {
+		return _pmPanel;
 	}
 
 	@Override
