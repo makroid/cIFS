@@ -6,18 +6,19 @@ General idea
 ------------
 A starting point and a set of transformations, which take as input a single point and output another point, are given.
 Then, the following simple iteration is applied X-times:
-
+	
+	z_old = starting point
 	X-times do
 		select transformation t from the set
 		apply transformation z_new = t(z_old)
 		plot(z_new)
 		z_old = z_new
     
-A transformation can be for example a scaling, rotation, inversion, or a combination and is defined by a set of points and their relations, see below.
+A transformation can be for example a scaling, rotation, inversion, or a combination of them and is defined by a set of points and their relations, see below.
     
 Usage
 -----
-In the image below, the starting point is in green and the menu offers actions to do:
+In the image below, the starting point is in green and the menu offers to:
 * add a point
 * add a P2 transformation
 * add a inversion transformation
@@ -39,6 +40,6 @@ Here, A is mapped onto itself, and B onto C. Applying the transformation results
 
 Changing the transformation (which is defined by its points A,B,C) by moving around the white points will result in a new image.
 
-As the transformation might be sensitive to changes, a point can be selected by touching it for 1s and a lower panel of buttons emerges, which allows to move the point pixelwise.
+As the transformation might be sensitive to changes, a point can be selected by touching it for 1sec and a lower panel of buttons emerges, which allows to move the point pixelwise.
 
 The preferences menu allows to change some default parameters (e.g. number of iterations, color of samples, ...)
