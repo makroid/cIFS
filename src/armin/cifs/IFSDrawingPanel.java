@@ -41,6 +41,7 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	private boolean _drawTrace;
 
 	private boolean _moveMode;
+	private float _moveScale;
 	private boolean _isStarted;
 
 	public IFSDrawingPanel(MyIFSActivity aparent, 
@@ -49,12 +50,12 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 						   IFSsampler asampler) {
 		super(aparent);
 		getHolder().addCallback(this);
-		_parent   = aparent;
-		_pointSet = apointSet;
-		_tfsSet   = atfsSet;
-		_sampler  = asampler;
-		_paint    = new Paint();
-		_moveMode = false;
+		_parent    = aparent;
+		_pointSet  = apointSet;
+		_tfsSet    = atfsSet;
+		_sampler   = asampler;
+		_paint     = new Paint();
+		_moveMode  = false;
 		_isStarted = false;
 		
 		setDefaultPaintValues(aparent);
@@ -69,6 +70,7 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		_sampler.setBurnin(pref.getInt("pref_numberOfBurnins", 100));
 		_sampleColor           = pref.getInt("pref_sampleColor", -256);
 		_drawTrace             = pref.getBoolean("pref_drawTrace", false);
+		_moveScale             = pref.getInt("pref_moveScale", 500) / 1000.0f;
 	}
 
 	protected void onSizeChanged (int w, int h, int oldw, int oldh) {
@@ -283,10 +285,10 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 		if (_pointSet.hasSelectedPoint()) {			
 			Complex z = _pointSet.getSelectedPoint().z;
 			switch (direction) {
-				case 0: z.update(z.add(new Complex(-1, 0))); break;
-				case 1: z.update(z.add(new Complex(1, 0))); break;
-				case 2: z.update(z.add(new Complex(0, 1))); break;
-				case 3: z.update(z.add(new Complex(0, -1))); break;
+				case 0: z.update(z.add(new Complex(-1*_moveScale, 0))); break;
+				case 1: z.update(z.add(new Complex(1*_moveScale, 0))); break;
+				case 2: z.update(z.add(new Complex(0, 1*_moveScale))); break;
+				case 3: z.update(z.add(new Complex(0, -1*_moveScale))); break;
 				default: z.update(z.add(new Complex(0, 0))); break;
 			}
 			calculateSample();
@@ -331,6 +333,10 @@ public class IFSDrawingPanel extends SurfaceView implements SurfaceHolder.Callba
 	
 	public void set_drawTrace(boolean _drawTrace) {
 		this._drawTrace = _drawTrace;
+	}
+	
+	public void set_moveScale(float f) {
+		_moveScale = f;
 	}
 	
 	public void unsetMoveMode() {

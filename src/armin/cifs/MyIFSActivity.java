@@ -137,6 +137,9 @@ public class MyIFSActivity extends Activity implements OnSharedPreferenceChangeL
 			boolean drawTrace = pref.getBoolean("pref_drawTrace", false);
 			_panel.set_drawTrace(drawTrace);
 			_panel.invalidate();
-		}		
+		} else if (key.equals("pref_moveScale")) {
+			int moveSize = pref.getInt("pref_moveScale", 500);
+			_panel.set_moveScale(moveSize / 1000.0f);
+		}
 	}
 }

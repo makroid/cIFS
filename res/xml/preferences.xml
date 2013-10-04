@@ -41,12 +41,19 @@
         android:dialogMessage="test"
         android:title="Color of samples"
         />
-    
-     
+         
 	<CheckBoxPreference
 	    android:key="pref_drawTrace"
     	android:title="Draw trace"
     	android:summary="Draws trace as a line"
     	android:defaultValue="false" />
+	
+	<armin.cifs.dialogs.SeekBarDialogPreference
+        android:key="pref_moveScale"
+        android:defaultValue="500"
+        android:dialogMessage="Set step size"
+        android:max="1000"
+        android:title="Step size for move"
+        custom:min="0" />
  
 </PreferenceScreen>
